@@ -3,7 +3,7 @@
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
 
-export default function Home() {
+export default function Conversor() {
 
   const [select, setSelect] = useState('metro') //definir a unidade de conversão
   const [numero, setNumero] = useState(0) //definir o valor de conversão
@@ -11,16 +11,17 @@ export default function Home() {
   const [outSelect, setOutSelect] = useState('metro')
   const [saida, setSaida] = useState(0)
 
-  const Convertion = (select, outSelect, input = numero, saida) => {
+  const Converter = (inSelect = select, outSelect = outSelect, input = numero) => {
+    //função que confere as unidades de saída e muda o valor global saida
 
-    if (select == "centimetro") {
+    if ( inSelect== "centimetro") {
       if (outSelect == "metro") {
         saida = parseFloat(input / 100).toFixed(2)
       }
       else if (outSelect == "kilometro") {
         saida = parseFloat(input / 100000).toFided(6)
       }
-    }else if (select == "metro") {
+    }else if (inSelect == "metro") {
       if (outSelect == "centrimetro") {
         saida = parseFloat(input * 100).toFixed(2)
       }
@@ -28,7 +29,7 @@ export default function Home() {
         saida = parseFloat(input / 1000).toFixed(3)
       }
     }
-    else if (select == "kilometro") {
+    else if (inSelect == "kilometro") {
       if (outSelect == "metro") {
         saida = parseFloat(input * 1000).toFixed(2)
       }
@@ -37,12 +38,16 @@ export default function Home() {
       }
     }
 
+    return setSaida(saida)
+  }
+
+  const Resultado = (retorno) => {
+
     return (
       <div>
-        <span>{` ${input} `}</span>
+        <span>{retorno}</span>
       </div>
     )
-
   }
 
   return (
@@ -63,15 +68,16 @@ export default function Home() {
             <option value="kilometro">kilômetros</option>
           </select>
           <span> para: </span>
-          <select value={saida} onChange={(e) => {
-            setSaida(e.target.value)
+          <select value={outSelect} onChange={(e) => {
+            setOutSelect(e.target.value)
           }}  name="saida" id="saida">
             <option value="centimetro">centímetros</option>
             <option value="metro">metros</option>
             <option value="kilometro">kilômetros</option>
           </select>
         </div>
-        <Convertion></Convertion>
+        <button></button>
+        <Resultado></Resultado>
       </div>
     </div>
   )
